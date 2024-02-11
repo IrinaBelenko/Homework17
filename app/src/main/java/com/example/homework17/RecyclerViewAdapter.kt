@@ -5,10 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class RecyclerViewAdapter (private val items: MutableList<Hero>, val onClick:(String)->Unit): RecyclerView.Adapter<RecycleViewHolder>(){
+class RecyclerViewAdapter (private val items: MutableList<Hero>,  val onItemClick:(item:Hero)->Unit): RecyclerView.Adapter<RecycleViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecycleViewHolder {
         val listItemView =
             LayoutInflater.from(parent.context).inflate(R.layout.list_item_layout, parent, false)
@@ -23,7 +24,9 @@ class RecyclerViewAdapter (private val items: MutableList<Hero>, val onClick:(St
         Glide.with(holder.itemView.context)
             .load(items[position].images.sm)
             .into(holder.image)
-        holder.itemView.setOnClickListener { onClick(items[position].name) }
+        holder.itemView.setOnClickListener {
+            onItemClick(items[position])
+        }
     }
 }
 
